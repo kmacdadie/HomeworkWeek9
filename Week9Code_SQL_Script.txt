@@ -1,0 +1,41 @@
+user
+ - ID, username, email, password
+post
+ - ID, user_ID, content, created_date
+comment
+ - ID, user_ID, post_ID, content, created_date
+
+create database if not exists comment_zone;
+
+use comment_zone;
+
+drop table if exists comment;
+drop table if exists post;
+drop table if exists user;
+
+create table user(
+   id int(3) not null auto_increment,
+   username varchar(15) not null,
+   password varchar(8) not null,
+   primary key(id)
+   );
+
+create table post(
+   id int(3) not null auto_increment,
+   user_id int(12) not null,
+   post_content text(1000) not null,
+   created_date datetime default current_timestamp,
+   primary key (id),
+   foreign key (user_id) references user(id)
+   );
+
+create table comment(
+   id int(3) not null auto_increment,
+   user_id int(12) not null,
+   post_id int(12) not null,
+   comment_content text(800) not null,
+   created_date datetime default current_timestamp,
+   primary key (id),
+   foreign key (user_id) references user(id),
+   foreign key (post_id) references post(id)
+   );
